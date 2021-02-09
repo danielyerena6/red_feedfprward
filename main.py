@@ -77,15 +77,21 @@ class main(QMainWindow):
             self.listWidget.addItem("Patron no. {}".format(i))
 
             self.Feedforward(self.entrada[i])
-            print(self.activacion)
+
             contador =0
             contador1 =1
 
             for capa in self.activacion:
                 contador=0
-                self.listWidget.addItem("Capa {}".format(contador1))
+                if (contador1==len(self.neuronas)):
+                    self.listWidget.addItem("Capa {} Salida".format(contador1))
+                else:
+                    self.listWidget.addItem("Capa {}".format(contador1))
                 for activacion in capa:
-                    self.listWidget.addItem("ac({}) = {}".format(contador,activacion))
+                    if activacion==0 and contador1==len(self.neuronas):
+                        pass
+                    else:
+                        self.listWidget.addItem("ac({}) = {}".format(contador,activacion))
                     contador+=1
                 contador1 += 1
 
@@ -131,10 +137,10 @@ class main(QMainWindow):
                 acumulador = 0
                 for k in range(self.neuronas[i]):
                     acumulador += self.activacion[i, k] * self.pesos[i, k, j]
-                    print(" {}   {}  ".format(self.activacion[i, k], self.pesos[i, k, j]))
+
 
                 acumulador += self.umbrales[i, j]
-                print("{}  \n".format(self.umbrales[i, j]))
+
 
                 self.activacion[i + 1, j] = self.sigmoide(acumulador)
 
